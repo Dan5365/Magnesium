@@ -23,5 +23,6 @@ public class Employee {
     private String lastname;
     @Column(name = "email_id", nullable = false, unique = true)
     private String email;
-
+    @Column(name = "balance", nullable = false)
+    private int balance;
 }
