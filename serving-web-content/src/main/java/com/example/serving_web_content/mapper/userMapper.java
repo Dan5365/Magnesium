@@ -4,7 +4,7 @@ import com.example.serving_web_content.dto.UserDto;
 import com.example.serving_web_content.entity.User;
 
 public class userMapper {
-    public static UserDto mapToEmployeeDto(User user){
+    public static UserDto mapToUserDto(User user){
     return new UserDto(
             user.getId(),
             user.getFirstname(),
@@ -13,7 +13,7 @@ public class userMapper {
             user.getBalance()
     );
     }
-    public static User mapToEmployee(UserDto userDto){
+    public static User mapToUser(UserDto userDto){
             return new User(
                     userDto.getId(),
                     userDto.getFirstName(),

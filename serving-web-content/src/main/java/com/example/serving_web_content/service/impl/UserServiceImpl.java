@@ -21,9 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createEmployee(UserDto userDto) {
-        User user = userMapper.mapToEmployee(userDto);
+        User user = userMapper.mapToUser(userDto);
         User savedUser = userRepository.save(user);
-        return userMapper.mapToEmployeeDto(savedUser);
+        return userMapper.mapToUserDto(savedUser);
     }
 
     @Override
@@ -31,14 +31,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(employeeId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Employee is not exists with given id:"+ employeeId));
-        return userMapper.mapToEmployeeDto(user);
+        return userMapper.mapToUserDto(user);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
 
-        return users.stream().map((user)-> userMapper.mapToEmployeeDto(user)).collect(Collectors.toList());
+        return users.stream().map((user)-> userMapper.mapToUserDto(user)).collect(Collectors.toList());
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.setLastname(updatedEmployee.getLastName());
         user.setEmail(updatedEmployee.getEmail());
         User updatedUserObj = userRepository.save(user);
-        return userMapper.mapToEmployeeDto(updatedUserObj);
+        return userMapper.mapToUserDto(updatedUserObj);
     }
 
     @Override
