@@ -20,17 +20,17 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public UserDto createEmployee(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
         User savedUser = userRepository.save(user);
         return userMapper.mapToUserDto(savedUser);
     }
 
     @Override
-    public UserDto getEmployeeById(Long employeeId) {
-        User user = userRepository.findById(employeeId)
+    public UserDto getUserById(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Employee is not exists with given id:"+ employeeId));
+                        new ResourceNotFoundException("User is not exists with given id:"+ userId));
         return userMapper.mapToUserDto(user);
     }
 
@@ -42,23 +42,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateEmployee(Long employeeId, UserDto updatedEmployee) {
-        User user = userRepository.findById(employeeId).orElseThrow(
-                ()-> new ResourceNotFoundException("Employee is not exists with given id:"+ employeeId)
+    public UserDto updateUser(Long userId, UserDto updatedUser) {
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new ResourceNotFoundException("User is not exists with given id:"+ userId)
         );
 
-        user.setFirstname(updatedEmployee.getFirstName());
-        user.setLastname(updatedEmployee.getLastName());
-        user.setEmail(updatedEmployee.getEmail());
+        user.setFirstname(updatedUser.getFirstName());
+        user.setLastname(updatedUser.getLastName());
+        user.setEmail(updatedUser.getEmail());
         User updatedUserObj = userRepository.save(user);
         return userMapper.mapToUserDto(updatedUserObj);
     }
 
     @Override
-    public void deleteEmployee(Long employeeId) {
-        User user = userRepository.findById(employeeId).orElseThrow(
-                ()-> new ResourceNotFoundException("Employee is not exists with given id:"+ employeeId)
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                ()-> new ResourceNotFoundException("User is not exists with given id:"+ userId)
         );
-        userRepository.deleteById(employeeId);
+        userRepository.deleteById(userId);
     }
 }

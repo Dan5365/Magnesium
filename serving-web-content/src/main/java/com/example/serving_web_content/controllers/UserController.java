@@ -16,39 +16,39 @@ import java.util.List;
 public class UserController {
     private UserService userService;
 
-    //Add Employee REST API
+    //Add user REST API
     @PostMapping
-    public ResponseEntity<UserDto> createEmployee(@ RequestBody UserDto userDto){
-        UserDto savedEmployee = userService.createEmployee(userDto);
-        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+        UserDto savedUser = userService.createUser(userDto);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
     //Get Users REST API
     @GetMapping("{id}")
-    public ResponseEntity<UserDto> getEmployeeById(@PathVariable("id") Long employeeId){
-       UserDto userDto = userService.getEmployeeById(employeeId);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long UserId){
+       UserDto userDto = userService.getUserById(UserId);
     return ResponseEntity.ok(userDto);
     }
 
 
     //Get All Users REST API
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllEmployee(){
+    public ResponseEntity<List<UserDto>> getAllUser(){
         List<UserDto> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
     //Update Users REST API
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateEmployee(@PathVariable("id") Long employeeId,
-                                                  @RequestBody UserDto updatedEmployee){
-       UserDto userDto = userService.updateEmployee(employeeId, updatedEmployee);
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
+                                                  @RequestBody UserDto updatedUser){
+       UserDto userDto = userService.updateUser(userId, updatedUser);
    return ResponseEntity.ok(userDto);
     }
 
     //Delete Users REST API
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId){
-        userService.deleteEmployee(employeeId);
-        return ResponseEntity.ok("Employee deleted successfully");
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long UserId){
+        userService.deleteUser(UserId);
+        return ResponseEntity.ok("User deleted successfully");
     }
 }
 

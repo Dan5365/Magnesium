@@ -5,13 +5,13 @@ import com.example.serving_web_content.dto.UserDto;
 import java.util.List;
 
 public interface UserService {
-    UserDto createEmployee(UserDto userDto);
+    UserDto createUser(UserDto userDto);
 
-    UserDto getEmployeeById(Long employeeId);
+    UserDto getUserById(Long employeeId);
     List<UserDto> getAllUsers();
 
-    UserDto updateEmployee(Long employeeId, UserDto updatedEmployee);
+    UserDto updateUser(Long employeeId, UserDto updatedEmployee);
 
 
-    void deleteEmployee(Long employeeId);
+    void deleteUser(Long employeeId);
 }
