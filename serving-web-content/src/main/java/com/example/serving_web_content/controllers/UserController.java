@@ -1,55 +1,63 @@
 package com.example.serving_web_content.controllers;
 
-
 import com.example.serving_web_content.dto.UserDto;
 import com.example.serving_web_content.service.UserService;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/users")
+@Validated
 public class UserController {
     private UserService userService;
 
-    //Add user REST API
+    // Add user REST API
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
         UserDto savedUser = userService.createUser(userDto);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
-    //Get Users REST API
+
+    // Get User by ID REST API
     @GetMapping("{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long UserId){
-       UserDto userDto = userService.getUserById(UserId);
-    return ResponseEntity.ok(userDto);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") @NotNull Long userId) {
+        UserDto userDto = userService.getUserById(userId);
+        return ResponseEntity.ok(userDto);
     }
 
-
-    //Get All Users REST API
+    // Get All Users REST API
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUser(){
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
-    //Update Users REST API
+
+    // Update User REST API
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
-                                                  @RequestBody UserDto updatedUser){
-       UserDto userDto = userService.updateUser(userId, updatedUser);
-   return ResponseEntity.ok(userDto);
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") @NotNull Long userId,
+                                              @RequestBody @Valid UserDto updatedUser) {
+        UserDto userDto = userService.updateUser(userId, updatedUser);
+        return ResponseEntity.ok(userDto);
     }
 
-    //Delete Users REST API
+    // Delete User REST API
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") Long UserId){
-        userService.deleteUser(UserId);
+    public ResponseEntity<String> deleteUser(@PathVariable("id") @NotNull Long userId) {
+        userService.deleteUser(userId);
         return ResponseEntity.ok("User deleted successfully");
     }
+
+    // Exception handler for validation errors
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> handleValidationExceptions(ConstraintViolationException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
-
-
