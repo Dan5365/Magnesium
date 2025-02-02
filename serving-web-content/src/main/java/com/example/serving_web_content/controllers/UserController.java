@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -33,12 +34,16 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-    // Get All Users REST API
+    // Get All Users REST API with filtering
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<UserDto> users = userService.getAllUsers();
+        List<UserDto> users = userService.getAllUsers()
+                .stream()
+                .filter(user -> user.getBalance() > 1000)  // Пример фильтрации с использованием lambda
+                .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
+
 
     // Update User REST API
     @PutMapping("{id}")
