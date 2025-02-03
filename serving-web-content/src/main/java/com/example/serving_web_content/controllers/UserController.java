@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = userService.getAllUsers()
                 .stream()
-                .filter(user -> user.getBalance() > 1000)  // Пример фильтрации с использованием lambda
+                .filter(user -> user.getBalance() > 1000)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
