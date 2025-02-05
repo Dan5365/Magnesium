@@ -3,7 +3,7 @@ package com.example.serving_web_content.service.impl;
 import com.example.serving_web_content.dto.ProductDto;
 import com.example.serving_web_content.entity.Product;
 import com.example.serving_web_content.exception.ResourceNotFoundException;
-import com.example.serving_web_content.mapper.productMapper;
+import com.example.serving_web_content.mapper.ProductMapper;
 import com.example.serving_web_content.repository.ProductRepository;
 import com.example.serving_web_content.service.ProductService;
 import lombok.AllArgsConstructor;
@@ -20,9 +20,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto createProduct(ProductDto productDto) {
-        Product product = productMapper.mapToProduct(productDto);
+        Product product = ProductMapper.mapToProduct(productDto);
         Product savedProduct = productRepository.save(product);
-        return productMapper.mapToProductDto(savedProduct);
+        return ProductMapper.mapToProductDto(savedProduct);
     }
 
     @Override
@@ -30,14 +30,14 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Product is not exists with given id:"+ productId));
-        return productMapper.mapToProductDto(product);
+        return ProductMapper.mapToProductDto(product);
     }
 
     @Override
     public List<ProductDto> getAllProducts() {
         List<Product> products = productRepository.findAll();
 
-        return products.stream().map((product)-> productMapper.mapToProductDto(product)).collect(Collectors.toList());
+        return products.stream().map((product)-> ProductMapper.mapToProductDto(product)).collect(Collectors.toList());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCost(updatedProduct.getCost());
         product.setQuantity(updatedProduct.getQuantity());
         Product updatedProductObj = productRepository.save(product);
-        return productMapper.mapToProductDto(updatedProductObj);
+        return ProductMapper.mapToProductDto(updatedProductObj);
     }
 
     @Override
