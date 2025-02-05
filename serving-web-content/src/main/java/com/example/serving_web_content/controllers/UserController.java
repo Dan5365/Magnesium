@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -33,7 +34,10 @@ public class UserController {
     //Get All Users REST API
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUser(){
-        List<UserDto> users = userService.getAllUsers();
+        List<UserDto> users = userService.getAllUsers()
+                .stream()
+                .filter(user -> user.getBalance() > 1000)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
     //Update Users REST API
