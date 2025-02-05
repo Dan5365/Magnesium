@@ -36,7 +36,7 @@ public class UserController {
 
     // Get All Users REST API with filtering
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers(){
         List<UserDto> users = userService.getAllUsers()
                 .stream()
                 .filter(user -> user.getBalance() > 1000)
