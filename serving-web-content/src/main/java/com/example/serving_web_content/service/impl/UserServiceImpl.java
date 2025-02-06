@@ -1,7 +1,7 @@
 package com.example.serving_web_content.service.impl;
 
 import com.example.serving_web_content.exception.ResourceNotFoundException;
-import com.example.serving_web_content.mapper.userMapper;
+import com.example.serving_web_content.mapper.UserMapper;
 import com.example.serving_web_content.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import com.example.serving_web_content.dto.UserDto;
@@ -21,9 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = userMapper.mapToUser(userDto);
+        User user = UserMapper.mapToUser(userDto);
         User savedUser = userRepository.save(user);
-        return userMapper.mapToUserDto(savedUser);
+        return UserMapper.mapToUserDto(savedUser);
     }
 
     @Override
@@ -31,14 +31,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User is not exists with given id:"+ userId));
-        return userMapper.mapToUserDto(user);
+        return UserMapper.mapToUserDto(user);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
 
-        return users.stream().map((user)-> userMapper.mapToUserDto(user)).collect(Collectors.toList());
+        return users.stream().map((user)-> UserMapper.mapToUserDto(user)).collect(Collectors.toList());
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.setLastname(updatedUser.getLastName());
         user.setEmail(updatedUser.getEmail());
         User updatedUserObj = userRepository.save(user);
-        return userMapper.mapToUserDto(updatedUserObj);
+        return UserMapper.mapToUserDto(updatedUserObj);
     }
 
     @Override
