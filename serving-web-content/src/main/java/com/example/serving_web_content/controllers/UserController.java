@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 @Validated
 public class UserController {
-    private UserService userService;
+     private UserService userService;
 
     // Add user REST API
     @PostMapping
