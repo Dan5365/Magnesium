@@ -19,7 +19,7 @@ public class AdminController {
         this.userService = userService;
         this.userDeletionSubject = new UserDeletionSubject();
 
-        // Добавляем наблюдателя, который отправляет уведомления
+        //Adding observer which sends notification
         this.userDeletionSubject.addObserver(new UserDeletionNotifier());
     }
 
@@ -30,7 +30,7 @@ public class AdminController {
         return "admin/users";
     }
 
-    // Show form for creating a new user
+    //Сreating a new user
     @GetMapping("/new")
     public String createUserForm(Model model) {
         model.addAttribute("user", new UserDto());
@@ -44,7 +44,7 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    // Show form for editing a user
+    //Editing a user
     @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
@@ -63,7 +63,7 @@ public class AdminController {
     public String deleteUser(@PathVariable Long id, Model model) {
         userService.deleteUser(id);
 
-        // Уведомляем всех наблюдателей
+        //Notify everyone
         userDeletionSubject.notifyObservers(id);
 
         return "redirect:/admin/users";

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,4 +63,9 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
         logger.info("User with ID {} was successfully deleted!", userId);
     }
+    @Override
+    public Optional<User> findUserEntityById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
 }

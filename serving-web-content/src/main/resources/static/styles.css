@@ -9,7 +9,7 @@ html{
 .container1{
     height: 85px;
     width: 100%;
-    /*position: fixed;*/
+
     display: flex;
     gap: 20px;
     background-color: white;
