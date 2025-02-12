@@ -16,6 +16,10 @@ public class ProductDto {
 
     private long id;
 
+
+    @NotNull(message = "Product Category cannot be null")
+    private String productCategory;
+
     @NotNull(message = "Product name cannot be null")
     @Size(min = 2, max = 100, message = "Product name should be between 2 and 100 characters")
     private String productName;
@@ -25,4 +29,7 @@ public class ProductDto {
 
     @Min(value = 0, message = "Quantity must be greater than or equal to 0")
     private int quantity;
+
+
+
 }

@@ -17,8 +17,6 @@ public class UserController {
      private UserService userService;
 
 
-
-
     //Add user REST API
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){

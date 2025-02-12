@@ -11,9 +11,11 @@ public class ProductMapper {
         }
         return new ProductDto(
                 product.getId(),
+                product.getProductCategory(),
                 product.getProductName(),
                 product.getCost(),
                 product.getQuantity()
+
 
         );
     }
@@ -23,6 +25,7 @@ public class ProductMapper {
         }
         return new Product(
                 ProductDto.getId(),
+                ProductDto.getProductCategory(),
                 ProductDto.getProductName(),
                 ProductDto.getCost(),
                 ProductDto.getQuantity()

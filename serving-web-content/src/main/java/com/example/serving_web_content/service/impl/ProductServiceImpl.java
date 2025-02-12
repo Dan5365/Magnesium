@@ -60,4 +60,16 @@ public class ProductServiceImpl implements ProductService {
         );
         productRepository.deleteById(productId);
     }
+
+
+    @Override
+    public List<ProductDto> getProductsByCategory(String category) {
+        List<Product> products = productRepository.findByProductCategoryIgnoreCase(category);
+        return products.stream()
+                .map(ProductMapper::mapToProductDto)
+                .collect(Collectors.toList());
+    }
+
 }
+
+

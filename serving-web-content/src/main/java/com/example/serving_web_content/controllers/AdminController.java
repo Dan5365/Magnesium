@@ -1,6 +1,8 @@
 package com.example.serving_web_content.controllers;
 
 import com.example.serving_web_content.dto.UserDto;
+import com.example.serving_web_content.observer.UserDeletionNotifier;
+import com.example.serving_web_content.observer.UserDeletionSubject;
 import com.example.serving_web_content.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,14 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final UserService userService;
+    private final UserDeletionSubject userDeletionSubject;
 
     public AdminController(UserService userService) {
         this.userService = userService;
+        this.userDeletionSubject = new UserDeletionSubject();
+
+        // Добавляем наблюдателя, который отправляет уведомления
+        this.userDeletionSubject.addObserver(new UserDeletionNotifier());
     }
 
     // Display all users
@@ -51,10 +58,14 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    // Delete a user
+    // Delete a user and notify observers
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id, Model model) {
         userService.deleteUser(id);
+
+        // Уведомляем всех наблюдателей
+        userDeletionSubject.notifyObservers(id);
+
         return "redirect:/admin/users";
     }
 }
