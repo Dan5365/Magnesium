@@ -1,12 +1,15 @@
 package com.example.serving_web_content.service;
 
+import com.example.serving_web_content.dto.CreateOrderDto;
 import com.example.serving_web_content.dto.FullOrderDescriptionDto;
+import com.example.serving_web_content.dto.OrderDto;
 import com.example.serving_web_content.dto.OrderItemDto;
 import com.example.serving_web_content.dto.UserDto;
 import com.example.serving_web_content.entity.Order;
 import com.example.serving_web_content.entity.OrderItem;
 import com.example.serving_web_content.entity.User;
 import com.example.serving_web_content.repository.OrderRepository;
+import com.example.serving_web_content.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public FullOrderDescriptionDto getFullOrderDescription(Long orderId) {
         Order order = orderRepository.findById(orderId)
@@ -51,5 +57,43 @@ public class OrderService {
         fullOrderDescriptionDto.setOrderItems(orderItemDtos);
 
         return fullOrderDescriptionDto;
+    }
+
+    public OrderDto createOrder(CreateOrderDto createOrderDto) {
+        User user = userRepository.findById(createOrderDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Order order = new Order();
+        order.setUser(user);
+        order.setOrderDate(java.time.LocalDate.now().toString());
+        order.setTotalAmount(calculateTotalAmount(createOrderDto.getOrderItems()));
+
+        List<OrderItem> orderItems = createOrderDto.getOrderItems().stream()
+                .map(itemDto -> {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setProductName(itemDto.getProductName());
+                    orderItem.setQuantity(itemDto.getQuantity());
+                    orderItem.setPrice(itemDto.getPrice());
+                    orderItem.setOrder(order);
+                    return orderItem;
+                })
+                .collect(Collectors.toList());
+
+        order.setOrderItems(orderItems);
+        Order savedOrder = orderRepository.save(order);
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(savedOrder.getId());
+        orderDto.setUserId(savedOrder.getUser().getId());
+        orderDto.setStatus("CREATED");
+        orderDto.setOrderItems(createOrderDto.getOrderItems());
+
+        return orderDto;
+    }
+
+    private double calculateTotalAmount(List<OrderItemDto> orderItems) {
+        return orderItems.stream()
+                .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                .sum();
     }
 }

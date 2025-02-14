@@ -30,28 +30,28 @@ public class AdminController {
         return "admin/users";
     }
 
-    //Сreating a new user
+    //Form for creating a new user
     @GetMapping("/new")
     public String createUserForm(Model model) {
         model.addAttribute("user", new UserDto());
         return "admin/create_user";
     }
 
-    // Handle form submission for creating a new user
+    //Creating a new user
     @PostMapping
     public String createUser(@ModelAttribute("user") UserDto userDto) {
         userService.createUser(userDto);
         return "redirect:/admin/users";
     }
 
-    //Editing a user
+    //Form for Editing a user
     @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "admin/edit_user";
     }
 
-    // Handle form submission for updating a user
+    //Updating a user
     @PostMapping("/{id}")
     public String updateUser(@PathVariable Long id, @ModelAttribute("user") UserDto userDto) {
         userService.updateUser(id, userDto);
@@ -62,7 +62,6 @@ public class AdminController {
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id, Model model) {
         userService.deleteUser(id);
-
         //Notify everyone
         userDeletionSubject.notifyObservers(id);
 

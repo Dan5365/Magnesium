@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Component //creating objects and dependencies
 public class UserDeletionSubject {
     private final List<UserDeletionObserver> observers = new ArrayList<>();
 

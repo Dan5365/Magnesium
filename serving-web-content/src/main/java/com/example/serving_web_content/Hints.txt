@@ -16,3 +16,13 @@ INSERT INTO orders (user_id, order_date, total_amount) VALUES (1, '2023-10-01', 
 
 INSERT INTO order_items (order_id, product_name, quantity, price) VALUES (1, 'Product A', 2, 50.00);
 INSERT INTO order_items (order_id, product_name, quantity, price) VALUES (1, 'Product B', 1, 100.50);
+
+
+UserDeletionObserver – интерфейс, описывающий наблюдателя (Observer). // ждет удаление
+UserDeletionLogger – конкретный наблюдатель (Observer). //после удаления
+UserDeletionSubject – субъект (Subject), управляющий наблюдателями. //содержит всех наблюдателей
+UserDeletionNotifier – отправитель событий. //оповещает всех наблюдателей
+
+
+
+

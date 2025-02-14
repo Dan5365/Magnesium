@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 public class MainController {
-    private final ProductRepository productRepository;
+    private final ProductRepository productRepository; //Future perspectives
 
     public MainController(ProductRepository productRepository) {
         this.productRepository = productRepository;
