@@ -120,7 +120,7 @@ DELETE http://localhost:8080/api/products/[id}
 
 Вход как User или Admin
 ![image](https://github.com/user-attachments/assets/ac1ff378-d09e-4f01-821b-c1390fb793aa)
-![image](https://github.com/user-attachments/assets/1d884598-e00d-4da8-ae9f-9ead80c22187)
+
 
 Добавление продукта:
 ![image](https://github.com/user-attachments/assets/a16475cd-3d92-4b69-8ff1-afe23f39425c)
