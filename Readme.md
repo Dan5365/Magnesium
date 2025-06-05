@@ -125,7 +125,12 @@ DELETE http://localhost:8080/api/products/[id}
 Добавление продукта:
 ![image](https://github.com/user-attachments/assets/a16475cd-3d92-4b69-8ff1-afe23f39425c)
 
+Визуальная часть:
 ![image](https://github.com/user-attachments/assets/dcdea2c4-2aef-492a-9f7e-ec03839fa078)
+
+ERD Схема в БД:
+![image](https://github.com/user-attachments/assets/7fed8bae-7a0b-43d9-b14f-6f1ec45093b2)
+
 
 “Учебный проект. Все логотипы и изображения принадлежат их владельцам и используются исключительно в образовательных целях.” 
 
